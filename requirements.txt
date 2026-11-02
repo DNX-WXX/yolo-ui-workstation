@@ -1,0 +1,45 @@
+# 基础依赖（Python >= 3.10，见 pyproject.toml requires-python）
+# GUI 依赖
+PyQt5>=5.15.9
+PyQt5-sip>=12.11.0
+
+# 深度学习依赖
+ultralytics>=8.2.0
+torch>=2.0.0
+torchvision>=0.15.0
+
+# ONNX 依赖
+onnx>=1.14.0
+onnxruntime>=1.14.0
+
+# 图像处理依赖
+opencv-python>=4.8.0
+Pillow>=10.0.0
+
+# 数据处理依赖
+numpy>=1.24.0
+pandas>=2.0.0
+PyYAML>=6.0  # YAML 配置文件读写（数据集转换/训练/验证）
+polars>=1.0.0  # Ultralytics 训练结果保存依赖
+
+# 可视化依赖
+matplotlib>=3.7.0
+
+# 其他依赖
+psutil>=5.9.0  # 性能监控
+py-cpuinfo>=9.0.0  # CPU信息
+
+# 测试与代码质量工具（推荐使用 pip install -e .[dev] 安装）
+pytest>=7.4.0  # 单元测试框架
+pytest-cov>=4.1.0  # 测试覆盖率
+flake8>=6.0.0  # 代码检查
+isort>=5.13.0  # import 排序
+black>=24.0.0  # 代码格式化
+pre-commit>=3.5.0  # 提交钩子
+
+# 可选依赖（用于特定功能）
+# PyQt5-Qt5>=5.15.2  # 如需使用QtCharts
+# PyQtChart>=5.15.7  # 如需使用QtCharts
+# tensorrt>=8.6.0  # 如需使用TensorRT加速
+# coremltools>=6.3.0  # 如需导出CoreML模型
+# tensorflow>=2.10.0  # 如需导出TFLite模型

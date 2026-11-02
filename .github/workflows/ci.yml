@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install flake8
+        run: pip install flake8
+      - name: Lint with flake8
+        # 历史代码存在大量遗留问题，先以报告模式运行（--exit-zero），后续逐步清理
+        run: flake8 . --count --exit-zero --statistics
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install CPU-only PyTorch
+        run: pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+      - name: Install project and dependencies
+        run: |
+          pip install -e .
+          pip install pytest pytest-cov
+      - name: Run tests with coverage
+        run: pytest --cov=core --cov=config --cov-report=term-missing --cov-report=xml --cov-fail-under=40
+      - name: Upload coverage artifact
+        if: matrix.python-version == '3.10'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.xml

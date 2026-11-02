@@ -1,0 +1,18 @@
+[flake8]
+max-line-length = 120
+exclude =
+    __pycache__,
+    .git,
+    *.pyc,
+    *.pyo,
+    .eggs,
+    *.egg-info,
+    venv,
+    .venv
+ignore =
+    E501,
+    W503,
+    E203
+per-file-ignores =
+    # 测试文件需在 import 项目模块前插入 sys.path
+    tests/*:E402
